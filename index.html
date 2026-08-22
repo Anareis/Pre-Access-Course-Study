@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study Links</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Crimson+Pro:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --amber-gold:   #ffbe0b;
+    --blaze-orange: #fb5607;
+    --neon-pink:    #ff006e;
+    --blue-violet:  #8338ec;
+    --azure-blue:   #3a86ff;
+
+    --bg:        #f8f8fc;
+    --bg-card:   rgba(255,255,255,0.75);
+    --ink:       #14142b;
+    --ink-mid:   #2d2d4e;
+    --ink-light: #6e6e96;
+    --border:    rgba(60,60,120,0.1);
+    --cream-dark: #ededf5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.6;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 10% 5%,  rgba(255,190,11,0.10) 0%, transparent 45%),
+      radial-gradient(ellipse at 90% 95%, rgba(131,56,236,0.08) 0%, transparent 45%),
+      radial-gradient(ellipse at 55% 50%, rgba(58,134,255,0.05) 0%, transparent 55%);
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 60px 32px 100px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  header {
+    margin-bottom: 64px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blaze-orange);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--neon-pink);
+  }
+
+  .header-sub {
+    color: var(--ink-light);
+    font-size: 1rem;
+    font-weight: 300;
+    max-width: 480px;
+    line-height: 1.7;
+  }
+
+  /* Recommended order banner */
+  .order-banner {
+    background: var(--ink);
+    color: #f8f8fc;
+    border-radius: 4px;
+    padding: 28px 32px;
+    margin-bottom: 64px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .order-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 200px; height: 100%;
+    background: linear-gradient(135deg, transparent 40%, rgba(236,72,153,0.2) 100%);
+  }
+
+  .order-banner-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber-gold);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .order-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #f8f8fc;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+
+  .order-steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .order-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 3px;
+    padding: 6px 12px;
+    font-size: 0.82rem;
+    color: rgba(245,240,232,0.85);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    font-family: 'Crimson Pro', serif;
+  }
+
+  .order-step:hover {
+    background: rgba(255,190,11,0.2);
+    border-color: rgba(255,190,11,0.5);
+    color: #f8f8fc;
+  }
+
+  .order-step .step-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--amber-gold);
+    background: rgba(255,190,11,0.2);
+    border-radius: 2px;
+    padding: 2px 5px;
+    letter-spacing: 0.05em;
+  }
+
+  /* Section */
+  .section {
+    margin-bottom: 56px;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section:nth-child(1) { animation-delay: 0.05s; }
+  .section:nth-child(2) { animation-delay: 0.1s; }
+  .section:nth-child(3) { animation-delay: 0.15s; }
+  .section:nth-child(4) { animation-delay: 0.2s; }
+  .section:nth-child(5) { animation-delay: 0.25s; }
+  .section:nth-child(6) { animation-delay: 0.3s; }
+  .section:nth-child(7) { animation-delay: 0.35s; }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--ink);
+    flex: 1;
+  }
+
+  .section-note {
+    font-size: 0.88rem;
+    color: var(--ink-light);
+    margin-top: 12px;
+    margin-bottom: 4px;
+    font-style: italic;
+    line-height: 1.6;
+    padding-left: 2px;
+  }
+
+  /* Link cards */
+  .links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .link-card {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--bg-card);
+    overflow: hidden;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+    backdrop-filter: blur(4px);
+  }
+
+  .link-card:hover {
+    transform: translateX(4px);
+    border-color: transparent;
+    box-shadow: 0 2px 20px rgba(100,80,50,0.1), -3px 0 0 var(--section-accent, var(--amber));
+    background: rgba(255,255,255,0.85);
+  }
+
+
+  .link-content {
+    padding: 14px 18px;
+    flex: 1;
+  }
+
+  .link-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+
+  .link-url {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-light);
+    margin-top: 2px;
+    opacity: 0.7;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 500px;
+  }
+
+  .link-arrow {
+    padding-right: 16px;
+    color: var(--ink-light);
+    font-size: 14px;
+    opacity: 0.4;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .link-card:hover .link-arrow {
+    opacity: 1;
+    color: var(--section-accent, var(--amber));
+    transform: translateX(2px);
+  }
+
+  /* Section color themes — palette: amber-gold, blaze-orange, neon-pink, blue-violet, azure-blue */
+  .section-start    { --section-accent: var(--blaze-orange); }   /* orange — energetic opener */
+  .section-writing  { --section-accent: var(--neon-pink); }      /* pink — stands out, feels intentional */
+  .section-english  { --section-accent: var(--amber-gold); }     /* gold — warm, familiar */
+  .section-health   { --section-accent: #00b4a0; }               /* teal — calm health feel, readable */
+  .section-biology  { --section-accent: var(--azure-blue); }     /* blue — clean, scientific */
+  .section-anatomy  { --section-accent: var(--blue-violet); }    /* violet — distinct from blue above */
+  .section-advanced { --section-accent: var(--blaze-orange); }   /* orange again — intensity matches difficulty */
+  .section-psych    { --section-accent: var(--neon-pink); }      /* pink — suits psychology */
+  .section-extras   { --section-accent: var(--blue-violet); }    /* violet — slightly muted/bonus feel */
+
+  .section-start .section-icon    { background: rgba(251,86,7,0.10); }
+  .section-writing .section-icon  { background: rgba(255,0,110,0.10); }
+  .section-english .section-icon  { background: rgba(255,190,11,0.12); }
+  .section-health .section-icon   { background: rgba(0,180,160,0.10); }
+  .section-biology .section-icon  { background: rgba(58,134,255,0.10); }
+  .section-anatomy .section-icon  { background: rgba(131,56,236,0.10); }
+  .section-advanced .section-icon { background: rgba(251,86,7,0.10); }
+  .section-psych .section-icon    { background: rgba(255,0,110,0.10); }
+  .section-extras .section-icon   { background: rgba(131,56,236,0.10); }
+
+  /* Optional badge */
+  .badge-optional {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    background: var(--cream-dark);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 2px 6px;
+    flex-shrink: 0;
+    margin-right: 12px;
+    opacity: 0.75;
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-light);
+    opacity: 0.6;
+    letter-spacing: 0.05em;
+  }
+
+  .progress-note {
+    font-size: 0.88rem;
+    color: var(--ink-light);
+    font-style: italic;
+  }
+
+  /* Checkboxes for tracking */
+  .link-check {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 3px;
+    margin-right: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    position: relative;
+    background: transparent;
+  }
+
+  .link-check:checked {
+    background: var(--section-accent, var(--amber));
+    border-color: var(--section-accent, var(--amber));
+  }
+
+  .link-check:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 10px;
+    line-height: 1;
+  }
+
+  .link-card.done {
+    opacity: 0.5;
+  }
+
+  .link-card.done .link-title {
+    text-decoration: line-through;
+  }
+
+  .check-wrap {
+    padding: 14px 10px 14px 16px;
+    display: flex;
+    align-items: center;
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 40px 20px 60px; }
+    .order-banner { padding: 20px; }
+    .order-steps { gap: 6px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <span class="header-label">Personal Study Guide</span>
+    <h1>Back to <em>Learning</em></h1>
+    <p class="header-sub">A curated set of resources to ease back into study — from skills and foundations through to psychology. Work through these before the course begins.</p>
+  </header>
+
+<!-- Recommended Order Banner -->
+  <div class="order-banner">
+    <span class="order-banner-label">✦ Tightest track — do these first if the full list feels overwhelming</span>
+    <p class="order-title">If you only follow one thing, follow this order.</p>
+    <div class="order-steps">
+      <a class="order-step" href="https://www.open.edu/openlearn/education-development/succeed-with-learning/content-section-0" target="_blank"><span class="step-num">01</span> Succeed with Learning</a>
+      <a class="order-step" href="https://www.skillsyouneed.com/learn/" target="_blank"><span class="step-num">02</span> Study Skills</a>
+      <a class="order-step" href="https://www.open.edu/openlearn/education-development/essay-and-report-writing-skills/content-section-0" target="_blank"><span class="step-num">03</span> Essay &amp; Report Writing</a>
+      <a class="order-step" href="https://www.open.edu/openlearn/education-development/all-my-own-work-exploring-academic-integrity/content-section-0" target="_blank"><span class="step-num">04</span> Academic Integrity</a>
+      <a class="order-step" href="https://www.open.ac.uk/library/help-and-support/harvard-referencing" target="_blank"><span class="step-num">05</span> Harvard Referencing</a>
+      <a class="order-step" href="https://www.bbc.co.uk/bitesize/subjects/z38pycw" target="_blank"><span class="step-num">06</span> BBC Maths</a>
+      <a class="order-step" href="https://www.khanacademy.org/science/high-school-biology" target="_blank"><span class="step-num">07</span> Khan HS Biology</a>
+      <a class="order-step" href="https://www.khanacademy.org/science/ap-biology/cell-communication-and-cell-cycle/homeostasis-ap/a/homeostasis" target="_blank"><span class="step-num">08</span> Homeostasis</a>
+      <a class="order-step" href="https://www.open.edu/openlearn/science-maths-technology/biology/blood-and-the-respiratory-system/content-section-0" target="_blank"><span class="step-num">09</span> Blood &amp; Respiratory</a>
+      <a class="order-step" href="https://www.physicsandmathstutor.com/biology-revision/" target="_blank"><span class="step-num">10</span> PMT Biology</a>
+    </div>
+  </div>
+
+  <!-- Section 1: Start Here -->
+  <div class="section section-start">
+    <div class="section-header">
+      <div class="section-icon">📖</div>
+      <h2>Start Here First</h2>
+    </div>
+    <p class="section-note">Gets your brain back into "how to study, write, and work honestly" before you pile any content on top. Do these before anything else.</p>
+    <div class="links">
+      <a class="link-card" href="https://www.open.edu/openlearn/education-development/succeed-with-learning/content-section-0" target="_blank">
+        <div class="check-wrap"><input class="link-check" type="checkbox" onclick="toggleDone(event)"></div>
+        <div class="link-content">
+          <div class="link-title">Succeed with Learning</div>
+          <div class="link-url">open.edu/openlearn — OpenLearn free course</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+      <a class="link-card" href="https://www.skillsyouneed.com/learn/" target="_blank">
+        <div class="check-wrap"><input class="link-check" type="checkbox" onclick="toggleDone(event)"></div>
+        <div class="link-content">
+          <div class="link-title">Study Skills — SkillsYouNeed</div>
+          <div class="link-url">skillsyouneed.com/learn</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+      <a class="link-card" href="https://www.open.edu/openlearn/education-development/essay-and-report-writing-skills/content-section-0" target="_blank">
+        <div class="check-wrap"><input class="link-check" type="checkbox" onclick="toggleDone(event)"></div>
+        <div class="link-content">
+          <div class="link-title">Essay and Report Writing Skills</div>
+          <div class="link-url">open.edu/openlearn — OpenLearn free course</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+      <a class="link-card" href="https://www.open.edu/openlearn/education-development/all-my-own-work-exploring-academic-integrity/content-section-0" target="_blank">
+        <div class="check-wrap"><input class="link-check" type="checkbox" onclick="toggleDone(event)"></div>
+        <div class="link-content">
+          <div class="link-title">All My Own Work: Exploring Academic Integrity</div>
+          <div class="link-url">open.edu/openlearn — OpenLearn free course</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Section 2: Writing, Integrity & Referencing -->
+  <div class="section section-writing">
+    <div class="section-header">
+      <div class="section-icon">✍️</div>
+      <h2>Writing, Integrity &amp; Referencing</h2>
+    </div>
+    <p class="section-note">Once you've looked at essay writing, referencing clicks straight away. It also gives you an early win on one of the things that tends to scare people unnecessarily.</p>
+    <div class="links">
+      <a class="link-card" href="https://www.open.ac.uk/library/help-and-support/harvard-referencing" target="_blank">
+        <div class="check-wrap"><input class="link-check" type="checkbox" onclick="toggleDone(event)"></div>
+        <div class="link-content">
+          <div class="link-title">OU Quick Guide to Harvard Referencing</div>
+          <div class="link-url">open.ac.uk/library — Harvard referencing guide</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+      <a class="link-card" href="https://www.sunderland.ac.uk/library/help-with-your-research/referencing/fundamentals-of-referencing/" target="_blank">
+        <div class="check-wrap"><input class="link-check" type="checkbox" onclick="toggleDone(event)"></div>
+        <div class="link-content">
+          <div class="link-title">Sunderland: Fundamentals of Referencing</div>
+          <div class="link-url">sunderland.ac.uk/library — referencing fundamentals</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Section 3: English & Maths -->
+  <div class="section section-english">
+    <div class="section-header">
+      <div class="section-icon">✏️</div>
+      <h2>English &amp; Maths Refresh</h2>
+    </div>
+    <p class="section-note">Useful for confidence before the science gets heavier. Maths in particular is worth brushing up — numeracy and statistics come up on both the health science and psychology sides.</p>
+    <div class="links">
+      <a class="link-card" href="https://www.bbc.co.uk/bitesize/subjects/z3g4d2p" target="_blank">
+        <div class="check-wrap"><input class="link-check" type="checkbox" onclick="toggleDone(event)"></div>
+        <div class="link-content">
+          <div class="link-title">BBC Bitesize — English Language</div>
+          <div class="link-url">bbc.co.uk/bitesize</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+      <a class="link-card" href="https://www.bbc.co.uk/bitesize/subjects/z38pycw" target="_blank">
+        <div class="check-wrap"><input class="link-check" type="checkbox" onclick="toggleDone(event)"></div>
+        <div class="link-content">
+          <div class="link-title">BBC Bitesize — Maths</div>
+          <div class="link-url">bbc.co.uk/bitesize</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Section 4: Health & Care Context -->
+  <div class="section section-health">
+    <div class="section-header">
+      <div class="section-icon">🏥</div>
+      <h2>Health &amp; Care Context</h2>
+    </div>
+    <p class="section-note">Gives a sense of what health study is actually about before diving into the science. Helps connect what you're learning to real care — and makes the biology feel purposeful rather than abstract.</p>
+    <div class="links">
+      <a class="link-card" href="https://www.open.edu/openlearn/health-sports-psychology/so-you-want-to-be-a-nurse/content-section-overview" target="_blank">
+        <div class="check-wrap"><input class="link-check" type="checkbox" onclick="toggleDone(event)"></div>
+        <div class="link-content">
+          <div class="link-title">OpenLearn: So You Want to Be a Nurse?</div>
+          <div class="link-url">open.edu/openlearn — course orientation</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+      <a class="link-card" href="https://www.social-policy.org.uk/" target="_blank">
+        <div class="check-wrap"><input class="link-check" type="checkbox" onclick="toggleDone(event)"></div>
+        <div class="link-content">
+          <div class="link-title">Social Policy</div>
+          <div class="link-url">social-policy.org.uk</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Section 5: Biology Foundations -->
+  <div class="section section-biology">
+    <div class="section-header">
+      <div class="section-icon">🔬</div>
+      <h2>Biology Foundations</h2>
+    </div>
+    <p class="section-note">Your "understand the basics properly" layer. Khan Academy is great for understanding, not just memorising — exactly the kind of foundations you need for body systems and regulation.</p>
+    <div class="links">
+      <a class="link-card" href="https://www.khanacademy.org/science/high-school-biology" target="_blank">
+        <div class="check-wrap"><input class="link-check" type="checkbox" onclick="toggleDone(event)"></div>
+        <div class="link-content">
+          <div class="link-title">Khan Academy — High School Biology</div>
+          <div class="link-url">khanacademy.org/science/high-school-biology</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+      <a class="link-card" href="https://www.khanacademy.org/science/biology" target="_blank">
+        <div class="check-wrap"><input class="link-check" type="checkbox" onclick="toggleDone(event)"></div>
+        <div class="link-content">
+          <div class="link-title">Khan Academy — Biology Archive</div>
+          <div class="link-url">khanacademy.org/science/biology</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+      <a class="link-card" href="https://www.khanacademy.org/science/ap-biology/cell-communication-and-cell-cycle/homeostasis-ap/a/homeostasis" target="_blank">
+        <div class="check-wrap"><input class="link-check" type="checkbox" onclick="toggleDone(event)"></div>
+        <div class="link-content">
+          <div class="link-title">Khan Academy — Homeostasis</div>
+          <div class="link-url">khanacademy.org — AP Biology / Homeostasis</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Section 6: Anatomy & Physiology -->
+  <div class="section section-anatomy">
+    <div class="section-header">
+      <div class="section-icon">💪</div>
+      <h2>Anatomy &amp; Physiology</h2>
+    </div>
+    <p class="section-note">Acts as a bridge between general biology and health-science-style body systems — more applied than Khan, less demanding than A-level revision.</p>
+    <div class="links">
+      <a class="link-card" href="https://www.open.edu/openlearn/science-maths-technology/biology/blood-and-the-respiratory-system/content-section-0" target="_blank">
+        <div class="check-wrap"><input class="link-check" type="checkbox" onclick="toggleDone(event)"></div>
+        <div class="link-content">
+          <div class="link-title">OpenLearn: Blood and the Respiratory System</div>
+          <div class="link-url">open.edu/openlearn — applied biology</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Section 7: Advanced Biology -->
+  <div class="section section-advanced">
+    <div class="section-header">
+      <div class="section-icon">🧬</div>
+      <h2>Advanced Biology</h2>
+    </div>
+    <p class="section-note">Better tackled once the basics are refreshed. PMT is especially useful for testing yourself by topic; Seneca is great for notes.</p>
+    <div class="links">
+      <a class="link-card" href="https://www.physicsandmathstutor.com/biology-revision/" target="_blank">
+        <div class="check-wrap"><input class="link-check" type="checkbox" onclick="toggleDone(event)"></div>
+        <div class="link-content">
+          <div class="link-title">Physics &amp; Maths Tutor — A-level Biology Revision</div>
+          <div class="link-url">physicsandmathstutor.com/biology-revision</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+      <a class="link-card" href="https://www.physicsandmathstutor.com/biology-revision/a-level-aqa/" target="_blank">
+        <div class="check-wrap"><input class="link-check" type="checkbox" onclick="toggleDone(event)"></div>
+        <div class="link-content">
+          <div class="link-title">Physics &amp; Maths Tutor — AQA A-level Biology</div>
+          <div class="link-url">physicsandmathstutor.com/biology-revision/a-level-aqa</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+      <a class="link-card" href="https://senecalearning.com/en-GB/blog/a-level-biology-revision-notes/" target="_blank">
+        <div class="check-wrap"><input class="link-check" type="checkbox" onclick="toggleDone(event)"></div>
+        <div class="link-content">
+          <div class="link-title">Seneca — A-level Biology Revision Notes</div>
+          <div class="link-url">senecalearning.com — A-level Biology</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Section 8: Psychology -->
+  <div class="section section-psych">
+    <div class="section-header">
+      <div class="section-icon">🧠</div>
+      <h2>Psychology</h2>
+    </div>
+    <p class="section-note">Useful background, but not the first thing to spend energy on. Treat this as a lighter reading stream alongside the biology — not something to cram.</p>
+    <div class="links">
+      <a class="link-card" href="https://www.simplypsychology.org/perspectives.html" target="_blank">
+        <div class="check-wrap"><input class="link-check" type="checkbox" onclick="toggleDone(event)"></div>
+        <div class="link-content">
+          <div class="link-title">Psychological Approaches</div>
+          <div class="link-url">simplypsychology.org/perspectives.html</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+      <a class="link-card" href="https://www.simplypsychology.org/developmental-psychology.html" target="_blank">
+        <div class="check-wrap"><input class="link-check" type="checkbox" onclick="toggleDone(event)"></div>
+        <div class="link-content">
+          <div class="link-title">Developmental Psychology</div>
+          <div class="link-url">simplypsychology.org/developmental-psychology.html</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+      <a class="link-card" href="https://www.simplypsychology.org/personality.html" target="_blank">
+        <div class="check-wrap"><input class="link-check" type="checkbox" onclick="toggleDone(event)"></div>
+        <div class="link-content">
+          <div class="link-title">Theories of Personality</div>
+          <div class="link-url">simplypsychology.org/personality.html</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+      <a class="link-card" href="https://www.simplypsychology.org/social-psychology.html" target="_blank">
+        <div class="check-wrap"><input class="link-check" type="checkbox" onclick="toggleDone(event)"></div>
+        <div class="link-content">
+          <div class="link-title">Social Psychology</div>
+          <div class="link-url">simplypsychology.org/social-psychology.html</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Section 9: Optional Extras -->
+  <div class="section section-extras">
+    <div class="section-header">
+      <div class="section-icon">✨</div>
+      <h2>Optional Extras</h2>
+    </div>
+    <p class="section-note">Bonuses, not obligations. Dip in when curious — none of these are urgent.</p>
+    <div class="links">
+      <a class="link-card" href="https://www.brainfacts.org/3d-brain#intro=false&focus=Brain" target="_blank">
+        <div class="check-wrap"><input class="link-check" type="checkbox" onclick="toggleDone(event)"></div>
+        <div class="link-content">
+          <div class="link-title">3D Interactive Brain</div>
+          <div class="link-url">brainfacts.org/3d-brain</div>
+        </div>
+        <span class="badge-optional">optional</span>
+        <span class="link-arrow">→</span>
+      </a>
+      <a class="link-card" href="https://www.open.edu/openlearn/science-maths-technology/free-courses/" target="_blank">
+        <div class="check-wrap"><input class="link-check" type="checkbox" onclick="toggleDone(event)"></div>
+        <div class="link-content">
+          <div class="link-title">OpenLearn — Free Science Courses Hub</div>
+          <div class="link-url">open.edu/openlearn/science-maths-technology/free-courses</div>
+        </div>
+        <span class="badge-optional">optional</span>
+        <span class="link-arrow">→</span>
+      </a>
+      <a class="link-card" href="https://www.zotero.org/support/quick_start_guide" target="_blank">
+        <div class="check-wrap"><input class="link-check" type="checkbox" onclick="toggleDone(event)"></div>
+        <div class="link-content">
+          <div class="link-title">Zotero — Beginner's Quick Start Guide</div>
+          <div class="link-url">zotero.org/support/quick_start_guide</div>
+        </div>
+        <span class="badge-optional">optional · later</span>
+        <span class="link-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    <span class="footer-text">study-links.html — open locally in any browser</span>
+    <span class="progress-note">Tick each link as you work through it.</span>
+  </footer>
+
+</div>
+
+<script>
+  function toggleDone(e) {
+    e.stopPropagation();
+    const card = e.target.closest('.link-card');
+    if (e.target.checked) {
+      card.classList.add('done');
+    } else {
+      card.classList.remove('done');
+    }
+    saveState();
+  }
+
+  function saveState() {
+    const cards = document.querySelectorAll('.link-card');
+    const state = Array.from(cards).map(c => c.classList.contains('done'));
+    try { localStorage.setItem('study-links-done', JSON.stringify(state)); } catch(e) {}
+  }
+
+  function loadState() {
+    try {
+      const state = JSON.parse(localStorage.getItem('study-links-done') || '[]');
+      const cards = document.querySelectorAll('.link-card');
+      cards.forEach((card, i) => {
+        if (state[i]) {
+          card.classList.add('done');
+          const cb = card.querySelector('.link-check');
+          if (cb) cb.checked = true;
+        }
+      });
+    } catch(e) {}
+  }
+
+  // Prevent checkbox click from following the link
+  document.querySelectorAll('.check-wrap').forEach(wrap => {
+    wrap.addEventListener('click', e => e.preventDefault());
+  });
+
+  loadState();
+</script>
+</body>
+</html>
