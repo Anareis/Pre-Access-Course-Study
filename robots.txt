@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://anareis.github.io/Pre-Access-Course-Study/sitemap.xml
